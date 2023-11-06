@@ -1,24 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import MemoList from "./MemoList";
+import MemoDetail from "./MemoDetail";
+import "./App.css";
+
+if (!localStorage.getItem("memos")) {
+  localStorage.setItem("memos", JSON.stringify([]));
+}
+
+const latestMemos = JSON.parse(localStorage.getItem("memos"));
+console.log(latestMemos);
 
 function App() {
+  console.log("Appコンポーネントのレンダリング!");
+  const [memos, setMemos] = useState(latestMemos);
+  const [selectedMemo, setSelectedMemo] = useState(null);
+  const [isEditable, setIsEditable] = useState(false);
+  const [isAddingNewMemo, setIsAddingNewMemo] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <MemoList
+        memos={memos}
+        setMemos={setMemos}
+        selectedMemo={selectedMemo}
+        setSelectedMemo={setSelectedMemo}
+        setIsEditable={setIsEditable}
+        isAddingNewMemo={isAddingNewMemo}
+        setIsAddingNewMemo={setIsAddingNewMemo}
+      />
+      {isEditable && (
+        <MemoDetail
+          key={selectedMemo.id}
+          memos={memos}
+          setMemos={setMemos}
+          selectedMemo={selectedMemo}
+          setIsEditable={setIsEditable}
+          isAddingNewMemo={isAddingNewMemo}
+          setIsAddingNewMemo={setIsAddingNewMemo}
+        />
+      )}
+    </>
   );
 }
 

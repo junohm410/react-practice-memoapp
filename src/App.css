@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.memo-title {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.selected-memo-title {
+  color: black;
+}
