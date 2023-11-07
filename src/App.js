@@ -13,7 +13,7 @@ if (retrieveAllMemosFromStorage() === null) {
   saveMemosToStorage([]);
 }
 
-function App() {
+export default function App() {
   const [memos, setMemos] = useState(JSON.parse(retrieveAllMemosFromStorage()));
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
@@ -99,5 +99,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
