@@ -11,3 +11,51 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.memo-app-container {
+  display: flex;
+}
+
+.memo-list-container {
+  min-width: 240px;
+  padding: 8px;
+}
+
+.memo-detail-container {
+  padding: 8px;
+}
+
+.memo-title {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.selected-memo-title {
+  color: black;
+}
+
+.memo-textarea {
+  margin: 16px 16px 8px 16px;
+  border-radius: 4px;
+}
+
+.memo-detail-button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.memo-edit-button {
+  margin: 0 16px;
+  width: 192px;
+}
+
+.memo-delete-button {
+  margin: 0 16px;
+  width: 80px;
+}
