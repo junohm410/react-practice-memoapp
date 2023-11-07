@@ -4,8 +4,8 @@ export default function MemoList({
   memos,
   selectedMemo,
   isAddingNewMemo,
-  onMemoTitleClick,
-  onAddButtonClick,
+  onClickMemoTitle,
+  onClickAddButton,
 }) {
   return (
     <div>
@@ -20,12 +20,12 @@ export default function MemoList({
                   ? "selected-memo-title"
                   : "memo-title"
               }
-              onClick={() => onMemoTitleClick(memo)}
+              onClick={() => onClickMemoTitle(memo)}
             />
           ))}
       </div>
       <div>
-        <button onClick={onAddButtonClick} disabled={isAddingNewMemo && true}>
+        <button onClick={onClickAddButton} disabled={isAddingNewMemo && true}>
           +
         </button>
       </div>

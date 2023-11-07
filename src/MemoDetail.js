@@ -3,11 +3,11 @@ import { useState } from "react";
 export default function MemoDetail({
   selectedMemo,
   isAddingNewMemo,
-  onMemoEditClick,
-  onDeleteButtonClick,
+  onSubmitMemo,
+  onDeleteMemo,
 }) {
   console.log("編集画面のレンダリング！");
-  const [editedContent, setEditedContent] = useState(selectedMemo.content);
+  const [inputContent, setInputContent] = useState(selectedMemo.content);
 
   return (
     <div>
@@ -15,19 +15,19 @@ export default function MemoDetail({
         <textarea
           rows="4"
           cols="40"
-          value={editedContent}
+          value={inputContent}
           onChange={(e) => {
-            setEditedContent(e.target.value);
+            setInputContent(e.target.value);
           }}
         ></textarea>
       </div>
       <div>
-        <button onClick={() => onMemoEditClick(editedContent)}>
+        <button onClick={() => onSubmitMemo(inputContent)}>
           {isAddingNewMemo ? "追加" : "編集"}
         </button>
       </div>
       <div>
-        <button onClick={onDeleteButtonClick}>削除</button>
+        <button onClick={onDeleteMemo}>削除</button>
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ function App() {
   const [isEditable, setIsEditable] = useState(false);
   const [isAddingNewMemo, setIsAddingNewMemo] = useState(false);
 
-  const handleMemoTitleClick = (memo) => {
+  const handleClickMemoTitle = (memo) => {
     if (selectedMemo !== null && selectedMemo.id === memo.id) {
       return;
     }
@@ -33,30 +33,30 @@ function App() {
     isAddingNewMemo && setIsAddingNewMemo(false);
   };
 
-  const handleAddButtonClick = () => {
+  const handleClickAddButton = () => {
     const newMemoId = memos.length > 0 ? memos[memos.length - 1].id + 1 : 1;
-    const temporaryNewMemo = {
+    const memoDraft = {
       id: newMemoId,
       content: "新規メモ",
     };
-    const temporaryNewMemoList = [...memos, temporaryNewMemo];
+    const temporaryNewMemoList = [...memos, memoDraft];
     setIsAddingNewMemo(true);
     setIsEditable(true);
     setMemos(temporaryNewMemoList);
-    setSelectedMemo(temporaryNewMemo);
+    setSelectedMemo(memoDraft);
   };
 
-  const handleEditButtonClick = (editedContent) => {
-    const firstLine = retrieveMemoFirstLine(editedContent);
+  const handleSubmitMemo = (inputContent) => {
+    const firstLine = retrieveMemoFirstLine(inputContent);
     if (firstLine === "" || blankCharRegExp.test(firstLine)) {
       alert("メモの1行目には空白以外の文字を1文字以上入力してください。");
       return;
     }
 
-    const editedMemo = { ...selectedMemo, content: editedContent };
+    const inputMemo = { ...selectedMemo, content: inputContent };
     const updatedMemos = memos.map((memo) => {
-      if (memo.id === editedMemo.id) {
-        return editedMemo;
+      if (memo.id === inputMemo.id) {
+        return inputMemo;
       } else {
         return memo;
       }
@@ -66,7 +66,7 @@ function App() {
     setMemos(updatedMemos);
   };
 
-  const handleDeleteButtonClick = () => {
+  const handleDeleteMemo = () => {
     isAddingNewMemo && setIsAddingNewMemo(false);
     const updatedMemos = memos.filter((memo) => memo.id !== selectedMemo.id);
     saveMemosToStorage(updatedMemos);
@@ -80,16 +80,16 @@ function App() {
         memos={memos}
         selectedMemo={selectedMemo}
         isAddingNewMemo={isAddingNewMemo}
-        onMemoTitleClick={handleMemoTitleClick}
-        onAddButtonClick={handleAddButtonClick}
+        onClickMemoTitle={handleClickMemoTitle}
+        onClickAddButton={handleClickAddButton}
       />
       {isEditable && (
         <MemoDetail
           key={selectedMemo.id}
           selectedMemo={selectedMemo}
           isAddingNewMemo={isAddingNewMemo}
-          onMemoEditClick={handleEditButtonClick}
-          onDeleteButtonClick={handleDeleteButtonClick}
+          onSubmitMemo={handleSubmitMemo}
+          onDeleteMemo={handleDeleteMemo}
         />
       )}
     </>
