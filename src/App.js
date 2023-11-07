@@ -6,7 +6,6 @@ import {
   saveMemosToStorage,
   retrieveMemoFirstLine,
 } from "./modules";
-import "./App.css";
 const blankCharRegExp = /^[\s\u3000]+$/;
 
 if (retrieveAllMemosFromStorage() === null) {
