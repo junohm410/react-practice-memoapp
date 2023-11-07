@@ -6,7 +6,6 @@ export default function MemoDetail({
   onSubmitMemo,
   onDeleteMemo,
 }) {
-  console.log("編集画面のレンダリング！");
   const [inputContent, setInputContent] = useState(selectedMemo.content);
 
   return (

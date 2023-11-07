@@ -13,10 +13,7 @@ if (retrieveAllMemosFromStorage() === null) {
   saveMemosToStorage([]);
 }
 
-console.log(JSON.parse(retrieveAllMemosFromStorage()));
-
 function App() {
-  console.log("Appコンポーネントのレンダリング!");
   const [memos, setMemos] = useState(JSON.parse(retrieveAllMemosFromStorage()));
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
