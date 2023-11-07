@@ -9,6 +9,17 @@ export default function MemoList({
   isAddingNewMemo,
   setIsAddingNewMemo,
 }) {
+  const handleMemoTitleClick = (memo) => {
+    if (selectedMemo !== null && selectedMemo.id === memo.id) {
+      return;
+    }
+
+    setIsEditable(true);
+    setSelectedMemo(memo);
+    setMemos(JSON.parse(localStorage.getItem("memos")));
+    isAddingNewMemo && setIsAddingNewMemo(false);
+  };
+
   const handleAddButtonClick = () => {
     const newMemoId = memos.length > 0 ? memos[memos.length - 1].id + 1 : 1;
     const temporaryNewMemo = {
@@ -35,16 +46,7 @@ export default function MemoList({
                   ? "selected-memo-title"
                   : "memo-title"
               }
-              onClick={() => {
-                if (selectedMemo !== null && selectedMemo.id === memo.id) {
-                  return;
-                }
-
-                setIsEditable(true);
-                setSelectedMemo(memo);
-                setMemos(JSON.parse(localStorage.getItem("memos")));
-                isAddingNewMemo && setIsAddingNewMemo(false);
-              }}
+              onClick={() => handleMemoTitleClick(memo)}
             />
           ))}
       </div>
