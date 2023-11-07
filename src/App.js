@@ -1,20 +1,23 @@
 import { useState } from "react";
 import MemoList from "./MemoList";
 import MemoDetail from "./MemoDetail";
-import { retrieveMemoFirstLine } from "./modules";
+import {
+  retrieveAllMemosFromStorage,
+  saveMemosToStorage,
+  retrieveMemoFirstLine,
+} from "./modules";
 import "./App.css";
 const blankCharRegExp = /^[\s\u3000]+$/;
 
-if (!localStorage.getItem("memos")) {
-  localStorage.setItem("memos", JSON.stringify([]));
+if (retrieveAllMemosFromStorage() === null) {
+  saveMemosToStorage([]);
 }
 
-const latestMemos = JSON.parse(localStorage.getItem("memos"));
-console.log(latestMemos);
+console.log(JSON.parse(retrieveAllMemosFromStorage()));
 
 function App() {
   console.log("Appコンポーネントのレンダリング!");
-  const [memos, setMemos] = useState(latestMemos);
+  const [memos, setMemos] = useState(JSON.parse(retrieveAllMemosFromStorage()));
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
   const [isAddingNewMemo, setIsAddingNewMemo] = useState(false);
@@ -26,7 +29,7 @@ function App() {
 
     setIsEditable(true);
     setSelectedMemo(memo);
-    setMemos(JSON.parse(localStorage.getItem("memos")));
+    setMemos(JSON.parse(retrieveAllMemosFromStorage()));
     isAddingNewMemo && setIsAddingNewMemo(false);
   };
 
@@ -70,9 +73,6 @@ function App() {
     setMemos(updatedMemos);
     setIsEditable(false);
   };
-
-  const saveMemosToStorage = (memos) =>
-    localStorage.setItem("memos", JSON.stringify(memos));
 
   return (
     <>
