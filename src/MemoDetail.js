@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export default function MemoDetail({
   selectedMemo,
+  isAddingNewMemo,
   onMemoEditClick,
   onDeleteButtonClick,
 }) {
@@ -21,7 +22,9 @@ export default function MemoDetail({
         ></textarea>
       </div>
       <div>
-        <button onClick={() => onMemoEditClick(editedContent)}>編集</button>
+        <button onClick={() => onMemoEditClick(editedContent)}>
+          {isAddingNewMemo ? "追加" : "編集"}
+        </button>
       </div>
       <div>
         <button onClick={onDeleteButtonClick}>削除</button>

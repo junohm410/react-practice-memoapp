@@ -87,6 +87,7 @@ function App() {
         <MemoDetail
           key={selectedMemo.id}
           selectedMemo={selectedMemo}
+          isAddingNewMemo={isAddingNewMemo}
           onMemoEditClick={handleEditButtonClick}
           onDeleteButtonClick={handleDeleteButtonClick}
         />
