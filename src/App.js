@@ -27,10 +27,10 @@ function App() {
       return;
     }
 
-    setIsEditable(true);
-    setSelectedMemo(memo);
-    setMemos(JSON.parse(retrieveAllMemosFromStorage()));
     isAddingNewMemo && setIsAddingNewMemo(false);
+    setIsEditable(true);
+    setMemos(JSON.parse(retrieveAllMemosFromStorage()));
+    setSelectedMemo(memo);
   };
 
   const handleClickAddButton = () => {
@@ -53,6 +53,11 @@ function App() {
       return;
     }
 
+    if (!isAddingNewMemo && inputContent === selectedMemo.content) {
+      alert("メモの内容に変更がないため保存されません。");
+      return;
+    }
+
     const inputMemo = { ...selectedMemo, content: inputContent };
     const updatedMemos = memos.map((memo) => {
       if (memo.id === inputMemo.id) {
@@ -64,14 +69,16 @@ function App() {
     isAddingNewMemo && setIsAddingNewMemo(false);
     saveMemosToStorage(updatedMemos);
     setMemos(updatedMemos);
+    setSelectedMemo(inputMemo);
   };
 
   const handleDeleteMemo = () => {
     isAddingNewMemo && setIsAddingNewMemo(false);
     const updatedMemos = memos.filter((memo) => memo.id !== selectedMemo.id);
     saveMemosToStorage(updatedMemos);
-    setMemos(updatedMemos);
     setIsEditable(false);
+    setMemos(updatedMemos);
+    setSelectedMemo(null);
   };
 
   return (
