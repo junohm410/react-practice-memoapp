@@ -8,21 +8,23 @@ export default function MemoList({
   onClickAddButton,
 }) {
   return (
-    <div>
+    <div className="memo-list-container">
       <div>
-        {memos.length > 0 &&
-          memos.map((memo) => (
-            <MemoTitle
-              key={memo.id}
-              memo={memo}
-              className={
-                selectedMemo !== null && selectedMemo.id === memo.id
-                  ? "selected-memo-title"
-                  : "memo-title"
-              }
-              onClick={() => onClickMemoTitle(memo)}
-            />
-          ))}
+        <ul>
+          {memos.length > 0 &&
+            memos.map((memo) => (
+              <MemoTitle
+                key={memo.id}
+                memo={memo}
+                className={
+                  selectedMemo !== null && selectedMemo.id === memo.id
+                    ? "selected-memo-title"
+                    : "memo-title"
+                }
+                onClick={() => onClickMemoTitle(memo)}
+              />
+            ))}
+        </ul>
       </div>
       <div>
         <button onClick={onClickAddButton} disabled={isAddingNewMemo && true}>

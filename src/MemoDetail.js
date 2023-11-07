@@ -10,24 +10,28 @@ export default function MemoDetail({
   const [inputContent, setInputContent] = useState(selectedMemo.content);
 
   return (
-    <div>
+    <div className="memo-detail-container">
       <div>
         <textarea
-          rows="4"
+          rows="8"
           cols="40"
+          className="memo-textarea"
           value={inputContent}
           onChange={(e) => {
             setInputContent(e.target.value);
           }}
         ></textarea>
       </div>
-      <div>
-        <button onClick={() => onSubmitMemo(inputContent)}>
+      <div className="memo-detail-button-container">
+        <button
+          className="memo-edit-button"
+          onClick={() => onSubmitMemo(inputContent)}
+        >
           {isAddingNewMemo ? "追加" : "編集"}
         </button>
-      </div>
-      <div>
-        <button onClick={onDeleteMemo}>削除</button>
+        <button className="memo-delete-button" onClick={onDeleteMemo}>
+          削除
+        </button>
       </div>
     </div>
   );

@@ -75,7 +75,7 @@ function App() {
   };
 
   return (
-    <>
+    <div className="memo-app-container">
       <MemoList
         memos={memos}
         selectedMemo={selectedMemo}
@@ -92,7 +92,7 @@ function App() {
           onDeleteMemo={handleDeleteMemo}
         />
       )}
-    </>
+    </div>
   );
 }
 
