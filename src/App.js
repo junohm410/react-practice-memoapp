@@ -23,9 +23,11 @@ export default function App() {
       return;
     }
 
-    isAddingNewMemo && setIsAddingNewMemo(false);
+    if (isAddingNewMemo) {
+      setMemos(JSON.parse(retrieveAllMemosFromStorage()));
+      setIsAddingNewMemo(false);
+    }
     setIsEditable(true);
-    setMemos(JSON.parse(retrieveAllMemosFromStorage()));
     setSelectedMemo(memo);
   };
 
