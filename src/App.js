@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MemoList from "./MemoList";
 import MemoDetail from "./MemoDetail";
+import { LoginContext } from "./LoginContext";
 import {
   getAllMemosFromStorage,
   saveMemosToStorage,
@@ -15,8 +16,10 @@ export default function App() {
       : JSON.parse(getAllMemosFromStorage()),
   );
   const [selectedMemo, setSelectedMemo] = useState(null);
+  const [inputContent, setInputContent] = useState("");
   const [isEditable, setIsEditable] = useState(false);
   const [isAddingNewMemo, setIsAddingNewMemo] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleClickMemoTitle = (memo) => {
     if (selectedMemo !== null && selectedMemo.id === memo.id) {
@@ -29,6 +32,7 @@ export default function App() {
     }
     setIsEditable(true);
     setSelectedMemo(memo);
+    setInputContent(memo.content);
   };
 
   const handleClickAddButton = () => {
@@ -42,6 +46,7 @@ export default function App() {
     setIsEditable(true);
     setMemos(temporaryNewMemoList);
     setSelectedMemo(memoDraft);
+    setInputContent("新規メモ");
   };
 
   const handleSubmitMemo = (inputContent) => {
@@ -68,6 +73,7 @@ export default function App() {
     saveMemosToStorage(updatedMemos);
     setMemos(updatedMemos);
     setSelectedMemo(inputMemo);
+    setInputContent(inputContent);
   };
 
   const handleDeleteMemo = () => {
@@ -77,26 +83,51 @@ export default function App() {
     setIsEditable(false);
     setMemos(updatedMemos);
     setSelectedMemo(null);
+    setInputContent("");
+  };
+
+  const handleClickLoginButton = () => {
+    if (isAddingNewMemo) {
+      setIsAddingNewMemo(false);
+      setIsEditable(false);
+      setMemos(JSON.parse(retrieveAllMemosFromStorage()));
+      setSelectedMemo(null);
+      setInputContent("");
+    }
+
+    if (!isAddingNewMemo && isEditable) {
+      setInputContent(selectedMemo.content);
+    }
+    setIsLoggedIn(!isLoggedIn);
   };
 
   return (
-    <div className="memo-app-container">
-      <MemoList
-        memos={memos}
-        selectedMemo={selectedMemo}
-        isAddingNewMemo={isAddingNewMemo}
-        onClickMemoTitle={handleClickMemoTitle}
-        onClickAddButton={handleClickAddButton}
-      />
-      {isEditable && (
-        <MemoDetail
-          key={selectedMemo.id}
+    <LoginContext.Provider value={isLoggedIn}>
+      <div className="memo-app-container">
+        <header>
+          <button onClick={handleClickLoginButton}>
+            {isLoggedIn ? "ログアウト" : "ログイン"}
+          </button>
+        </header>
+        <MemoList
+          memos={memos}
           selectedMemo={selectedMemo}
           isAddingNewMemo={isAddingNewMemo}
-          onSubmitMemo={handleSubmitMemo}
-          onDeleteMemo={handleDeleteMemo}
+          onClickMemoTitle={handleClickMemoTitle}
+          onClickAddButton={handleClickAddButton}
         />
-      )}
-    </div>
+        {isEditable && (
+          <MemoDetail
+            key={selectedMemo.id}
+            selectedMemo={selectedMemo}
+            isAddingNewMemo={isAddingNewMemo}
+            onSubmitMemo={handleSubmitMemo}
+            onDeleteMemo={handleDeleteMemo}
+            inputContent={inputContent}
+            onChangeText={(text) => setInputContent(text)}
+          />
+        )}
+      </div>
+    </LoginContext.Provider>
   );
 }
