@@ -1,7 +1,7 @@
 import { useState } from "react";
 import MemoList from "./MemoList";
 import MemoDetail from "./MemoDetail";
-import { LoginContext } from "./LoginContext";
+import { useLoginStatus } from "./LoginStatusContext";
 import {
   getAllMemosFromStorage,
   saveMemosToStorage,
@@ -19,7 +19,7 @@ export default function App() {
   const [inputContent, setInputContent] = useState("");
   const [isEditable, setIsEditable] = useState(false);
   const [isAddingNewMemo, setIsAddingNewMemo] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, setIsLoggedIn } = useLoginStatus();
 
   const handleClickMemoTitle = (memo) => {
     if (selectedMemo !== null && selectedMemo.id === memo.id) {
@@ -102,32 +102,30 @@ export default function App() {
   };
 
   return (
-    <LoginContext.Provider value={isLoggedIn}>
-      <div className="memo-app-container">
-        <header>
-          <button onClick={handleClickLoginButton}>
-            {isLoggedIn ? "ログアウト" : "ログイン"}
-          </button>
-        </header>
-        <MemoList
-          memos={memos}
+    <div className="memo-app-container">
+      <header>
+        <button onClick={handleClickLoginButton}>
+          {isLoggedIn ? "ログアウト" : "ログイン"}
+        </button>
+      </header>
+      <MemoList
+        memos={memos}
+        selectedMemo={selectedMemo}
+        isAddingNewMemo={isAddingNewMemo}
+        onClickMemoTitle={handleClickMemoTitle}
+        onClickAddButton={handleClickAddButton}
+      />
+      {isEditable && (
+        <MemoDetail
+          key={selectedMemo.id}
           selectedMemo={selectedMemo}
           isAddingNewMemo={isAddingNewMemo}
-          onClickMemoTitle={handleClickMemoTitle}
-          onClickAddButton={handleClickAddButton}
+          onSubmitMemo={handleSubmitMemo}
+          onDeleteMemo={handleDeleteMemo}
+          inputContent={inputContent}
+          onChangeText={(text) => setInputContent(text)}
         />
-        {isEditable && (
-          <MemoDetail
-            key={selectedMemo.id}
-            selectedMemo={selectedMemo}
-            isAddingNewMemo={isAddingNewMemo}
-            onSubmitMemo={handleSubmitMemo}
-            onDeleteMemo={handleDeleteMemo}
-            inputContent={inputContent}
-            onChangeText={(text) => setInputContent(text)}
-          />
-        )}
-      </div>
-    </LoginContext.Provider>
+      )}
+    </div>
   );
 }

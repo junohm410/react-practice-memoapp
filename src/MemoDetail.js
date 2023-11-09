@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { LoginContext } from "./LoginContext";
+import { useLoginStatus } from "./LoginStatusContext";
 
 export default function MemoDetail({
   isAddingNewMemo,
@@ -8,7 +7,7 @@ export default function MemoDetail({
   inputContent,
   onChangeText,
 }) {
-  const isLoggedIn = useContext(LoginContext);
+  const { isLoggedIn } = useLoginStatus();
 
   return (
     <div className="memo-detail-container">
