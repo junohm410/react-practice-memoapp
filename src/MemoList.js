@@ -16,11 +16,7 @@ export default function MemoList({
               <MemoTitle
                 key={memo.id}
                 memo={memo}
-                className={
-                  selectedMemo !== null && selectedMemo.id === memo.id
-                    ? "selected-memo-title"
-                    : "memo-title"
-                }
+                selectedMemo={selectedMemo}
                 onClick={() => onClickMemoTitle(memo)}
               />
             ))}
