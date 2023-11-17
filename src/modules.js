@@ -1,9 +1,9 @@
 export const saveMemosToStorage = (memos) =>
   localStorage.setItem("memos", JSON.stringify(memos));
 
-export const retrieveAllMemosFromStorage = () => localStorage.getItem("memos");
+export const getAllMemosFromStorage = () => localStorage.getItem("memos");
 
-export const retrieveMemoFirstLine = (memo) => {
+export const getMemoFirstLine = (memo) => {
   const newlineIndex = memo.indexOf("\n");
   return newlineIndex === -1 ? memo : memo.slice(0, newlineIndex);
 };

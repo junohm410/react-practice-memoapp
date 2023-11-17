@@ -2,18 +2,18 @@ import { useState } from "react";
 import MemoList from "./MemoList";
 import MemoDetail from "./MemoDetail";
 import {
-  retrieveAllMemosFromStorage,
+  getAllMemosFromStorage,
   saveMemosToStorage,
-  retrieveMemoFirstLine,
+  getMemoFirstLine,
 } from "./modules";
 const blankCharRegExp = /^[\s\u3000]+$/;
 
-if (retrieveAllMemosFromStorage() === null) {
+if (getAllMemosFromStorage() === null) {
   saveMemosToStorage([]);
 }
 
 export default function App() {
-  const [memos, setMemos] = useState(JSON.parse(retrieveAllMemosFromStorage()));
+  const [memos, setMemos] = useState(JSON.parse(getAllMemosFromStorage()));
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
   const [isAddingNewMemo, setIsAddingNewMemo] = useState(false);
@@ -24,7 +24,7 @@ export default function App() {
     }
 
     if (isAddingNewMemo) {
-      setMemos(JSON.parse(retrieveAllMemosFromStorage()));
+      setMemos(JSON.parse(getAllMemosFromStorage()));
       setIsAddingNewMemo(false);
     }
     setIsEditable(true);
@@ -45,7 +45,7 @@ export default function App() {
   };
 
   const handleSubmitMemo = (inputContent) => {
-    const firstLine = retrieveMemoFirstLine(inputContent);
+    const firstLine = getMemoFirstLine(inputContent);
     if (firstLine === "" || blankCharRegExp.test(firstLine)) {
       alert("メモの1行目には空白以外の文字を1文字以上入力してください。");
       return;

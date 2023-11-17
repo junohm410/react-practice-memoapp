@@ -1,7 +1,7 @@
-import { retrieveMemoFirstLine } from "./modules";
+import { getMemoFirstLine } from "./modules";
 
 export default function MemoTitle({ memo, className, onClick }) {
-  const firstLine = retrieveMemoFirstLine(memo.content);
+  const firstLine = getMemoFirstLine(memo.content);
 
   return (
     <li>
