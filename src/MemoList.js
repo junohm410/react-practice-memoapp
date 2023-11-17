@@ -27,7 +27,7 @@ export default function MemoList({
         </ul>
       </div>
       <div>
-        <button onClick={onClickAddButton} disabled={isAddingNewMemo && true}>
+        <button onClick={onClickAddButton} disabled={isAddingNewMemo}>
           +
         </button>
       </div>
