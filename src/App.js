@@ -13,7 +13,7 @@ export default function App() {
   const [memos, setMemos] = useState(
     getAllMemosFromStorage() === null
       ? []
-      : JSON.parse(getAllMemosFromStorage()),
+      : JSON.parse(getAllMemosFromStorage())
   );
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [inputContent, setInputContent] = useState("");
@@ -93,12 +93,24 @@ export default function App() {
       setMemos(JSON.parse(getAllMemosFromStorage()));
       setSelectedMemo(null);
       setInputContent("");
+      setIsLoggedIn(!isLoggedIn);
+      return;
     }
 
-    if (!isAddingNewMemo && isEditable) {
-      setInputContent(selectedMemo.content);
+    if (!isEditable) {
+      setIsLoggedIn(!isLoggedIn);
+      return;
     }
-    setIsLoggedIn(!isLoggedIn);
+
+    if (isLoggedIn) {
+      setIsEditable(false);
+      setSelectedMemo(null);
+      setInputContent("");
+      setIsLoggedIn(!isLoggedIn);
+    } else {
+      setInputContent(selectedMemo.content);
+      setIsLoggedIn(!isLoggedIn);
+    }
   };
 
   return (
