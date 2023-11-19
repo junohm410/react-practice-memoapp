@@ -8,12 +8,12 @@ import {
 } from "./modules";
 const blankCharRegExp = /^[\s\u3000]+$/;
 
-if (getAllMemosFromStorage() === null) {
-  saveMemosToStorage([]);
-}
-
 export default function App() {
-  const [memos, setMemos] = useState(JSON.parse(getAllMemosFromStorage()));
+  const [memos, setMemos] = useState(
+    getAllMemosFromStorage() === null
+      ? []
+      : JSON.parse(getAllMemosFromStorage())
+  );
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
   const [isAddingNewMemo, setIsAddingNewMemo] = useState(false);
