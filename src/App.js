@@ -12,7 +12,7 @@ export default function App() {
   const [memos, setMemos] = useState(
     getAllMemosFromStorage() === null
       ? []
-      : JSON.parse(getAllMemosFromStorage())
+      : JSON.parse(getAllMemosFromStorage()),
   );
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
