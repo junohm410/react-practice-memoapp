@@ -1,70 +1,63 @@
-# Getting Started with Create React App
+## 概要
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Reactを使って作成したSPA形式のメモアプリです。
 
-## Available Scripts
+メモの作成・閲覧・編集・削除が可能です。
 
-In the project directory, you can run:
+メモの保存には`localStorage`を使用しています。
 
-### `npm start`
+## インストール
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. `git clone`を実行してローカルに複製。
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```
+$ git clone https://github.com/junohm410/react-practice-memoapp.git
+```
 
-### `npm test`
+2. `react-practice-memoapp`ディレクトリに移動。
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+$ cd react-practice-memoapp
+```
 
-### `npm run build`
+3. `mpm install`を実行。
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+$ npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 実行
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. `npm start`を実行。
 
-### `npm run eject`
+```
+$ npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. `localhost:3000`がブラウザで開かれ、アプリが使える状態になります。
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 使い方
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### メモの追加
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+`+`ボタンをクリックすることで、メモの新規作成画面に移行します。
 
-## Learn More
+テキストエリアに入力し、追加ボタンを押すことでメモを保存できます。
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+追加されたメモの1行目が、メモ一覧でのタイトルとして使用されます。
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![EiDfessXws](https://github.com/junohm410/react-practice-memoapp/assets/128765400/ec07efcb-78c2-4c5d-a147-e919010de053)
 
-### Code Splitting
+### メモの選択・編集
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+メモ一覧のタイトルをクリックすることで、任意のメモの全文を閲覧できます。
 
-### Analyzing the Bundle Size
+テキストエリアに入力し、編集ボタンを押すことでメモを更新できます。
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![PXPTAdVJA7](https://github.com/junohm410/react-practice-memoapp/assets/128765400/5ac7f0cf-3b08-49fe-b253-ba4bb61ada54)
 
-### Making a Progressive Web App
+### メモの削除
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+メモ閲覧状態で削除ボタンをクリックすることで、そのメモを削除できます。
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![m1wDKypgjy](https://github.com/junohm410/react-practice-memoapp/assets/128765400/8f3c6dbd-d98f-439f-9a85-344b38992897)
