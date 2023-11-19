@@ -90,7 +90,7 @@ export default function App() {
     if (isAddingNewMemo) {
       setIsAddingNewMemo(false);
       setIsEditable(false);
-      setMemos(JSON.parse(retrieveAllMemosFromStorage()));
+      setMemos(JSON.parse(getAllMemosFromStorage()));
       setSelectedMemo(null);
       setInputContent("");
     }
