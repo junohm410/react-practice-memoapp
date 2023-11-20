@@ -1,12 +1,13 @@
+import { useState } from "react";
 import { useLoginStatus } from "./LoginStatusContext";
 
 export default function MemoDetail({
+  selectedMemo,
   isAddingNewMemo,
   onSubmitMemo,
   onDeleteMemo,
-  inputContent,
-  onChangeText,
 }) {
+  const [inputContent, setInputContent] = useState(selectedMemo.content);
   const { isLoggedIn } = useLoginStatus();
 
   return (
@@ -19,7 +20,7 @@ export default function MemoDetail({
           value={inputContent}
           readOnly={!isLoggedIn}
           onChange={(e) => {
-            onChangeText(e.target.value);
+            setInputContent(e.target.value);
           }}
         ></textarea>
       </div>

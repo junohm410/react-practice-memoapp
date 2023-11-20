@@ -17,7 +17,6 @@ export default function App() {
     return JSON.parse(getAllMemosFromStorage());
   });
   const [selectedMemo, setSelectedMemo] = useState(null);
-  const [inputContent, setInputContent] = useState("");
   const [isViewingMemoDetail, setIsViewingMemoDetail] = useState(false);
   const [isAddingNewMemo, setIsAddingNewMemo] = useState(false);
   const { isLoggedIn, setIsLoggedIn } = useLoginStatus();
@@ -33,7 +32,6 @@ export default function App() {
     }
     setIsViewingMemoDetail(true);
     setSelectedMemo(memo);
-    setInputContent(memo.content);
   };
 
   const handleClickAddButton = () => {
@@ -47,7 +45,6 @@ export default function App() {
     setIsViewingMemoDetail(true);
     setMemos(temporaryNewMemoList);
     setSelectedMemo(memoDraft);
-    setInputContent("新規メモ");
   };
 
   const handleSubmitMemo = (inputContent) => {
@@ -74,7 +71,6 @@ export default function App() {
     saveMemosToStorage(updatedMemos);
     setMemos(updatedMemos);
     setSelectedMemo(inputMemo);
-    setInputContent(inputContent);
   };
 
   const handleDeleteMemo = () => {
@@ -84,7 +80,6 @@ export default function App() {
     setIsViewingMemoDetail(false);
     setMemos(updatedMemos);
     setSelectedMemo(null);
-    setInputContent("");
   };
 
   const handleClickLoginButton = () => {
@@ -93,7 +88,6 @@ export default function App() {
       setIsViewingMemoDetail(false);
       setMemos(JSON.parse(getAllMemosFromStorage()));
       setSelectedMemo(null);
-      setInputContent("");
       setIsLoggedIn(false);
       return;
     }
@@ -106,10 +100,8 @@ export default function App() {
     if (isLoggedIn) {
       setIsViewingMemoDetail(false);
       setSelectedMemo(null);
-      setInputContent("");
       setIsLoggedIn(false);
     } else {
-      setInputContent(selectedMemo.content);
       setIsLoggedIn(true);
     }
   };
@@ -136,8 +128,6 @@ export default function App() {
             isAddingNewMemo={isAddingNewMemo}
             onSubmitMemo={handleSubmitMemo}
             onDeleteMemo={handleDeleteMemo}
-            inputContent={inputContent}
-            onChangeText={(text) => setInputContent(text)}
           />
         )}
       </div>
