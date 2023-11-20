@@ -94,7 +94,7 @@ export default function App() {
       setMemos(JSON.parse(getAllMemosFromStorage()));
       setSelectedMemo(null);
       setInputContent("");
-      setIsLoggedIn(!isLoggedIn);
+      setIsLoggedIn(false);
       return;
     }
 
@@ -107,10 +107,10 @@ export default function App() {
       setIsViewingMemoDetail(false);
       setSelectedMemo(null);
       setInputContent("");
-      setIsLoggedIn(!isLoggedIn);
+      setIsLoggedIn(false);
     } else {
       setInputContent(selectedMemo.content);
-      setIsLoggedIn(!isLoggedIn);
+      setIsLoggedIn(true);
     }
   };
 
