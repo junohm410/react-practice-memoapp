@@ -115,29 +115,31 @@ export default function App() {
 
   return (
     <div className="memo-app-container">
-      <header>
+      <div className="menu-container">
         <button onClick={handleClickLoginButton}>
           {isLoggedIn ? "ログアウト" : "ログイン"}
         </button>
-      </header>
-      <MemoList
-        memos={memos}
-        selectedMemo={selectedMemo}
-        isAddingNewMemo={isAddingNewMemo}
-        onClickMemoTitle={handleClickMemoTitle}
-        onClickAddButton={handleClickAddButton}
-      />
-      {isEditable && (
-        <MemoDetail
-          key={selectedMemo.id}
+      </div>
+      <div className="memo-main-container">
+        <MemoList
+          memos={memos}
           selectedMemo={selectedMemo}
           isAddingNewMemo={isAddingNewMemo}
-          onSubmitMemo={handleSubmitMemo}
-          onDeleteMemo={handleDeleteMemo}
-          inputContent={inputContent}
-          onChangeText={(text) => setInputContent(text)}
+          onClickMemoTitle={handleClickMemoTitle}
+          onClickAddButton={handleClickAddButton}
         />
-      )}
+        {isEditable && (
+          <MemoDetail
+            key={selectedMemo.id}
+            selectedMemo={selectedMemo}
+            isAddingNewMemo={isAddingNewMemo}
+            onSubmitMemo={handleSubmitMemo}
+            onDeleteMemo={handleDeleteMemo}
+            inputContent={inputContent}
+            onChangeText={(text) => setInputContent(text)}
+          />
+        )}
+      </div>
     </div>
   );
 }
