@@ -17,7 +17,7 @@ export default function App() {
   );
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [inputContent, setInputContent] = useState("");
-  const [isEditable, setIsEditable] = useState(false);
+  const [isViewingMemoDetail, setIsViewingMemoDetail] = useState(false);
   const [isAddingNewMemo, setIsAddingNewMemo] = useState(false);
   const { isLoggedIn, setIsLoggedIn } = useLoginStatus();
 
@@ -30,7 +30,7 @@ export default function App() {
       setMemos(JSON.parse(getAllMemosFromStorage()));
       setIsAddingNewMemo(false);
     }
-    setIsEditable(true);
+    setIsViewingMemoDetail(true);
     setSelectedMemo(memo);
     setInputContent(memo.content);
   };
@@ -43,7 +43,7 @@ export default function App() {
     };
     const temporaryNewMemoList = [...memos, memoDraft];
     setIsAddingNewMemo(true);
-    setIsEditable(true);
+    setIsViewingMemoDetail(true);
     setMemos(temporaryNewMemoList);
     setSelectedMemo(memoDraft);
     setInputContent("新規メモ");
@@ -80,7 +80,7 @@ export default function App() {
     isAddingNewMemo && setIsAddingNewMemo(false);
     const updatedMemos = memos.filter((memo) => memo.id !== selectedMemo.id);
     saveMemosToStorage(updatedMemos);
-    setIsEditable(false);
+    setIsViewingMemoDetail(false);
     setMemos(updatedMemos);
     setSelectedMemo(null);
     setInputContent("");
@@ -89,7 +89,7 @@ export default function App() {
   const handleClickLoginButton = () => {
     if (isAddingNewMemo) {
       setIsAddingNewMemo(false);
-      setIsEditable(false);
+      setIsViewingMemoDetail(false);
       setMemos(JSON.parse(getAllMemosFromStorage()));
       setSelectedMemo(null);
       setInputContent("");
@@ -97,13 +97,13 @@ export default function App() {
       return;
     }
 
-    if (!isEditable) {
+    if (!isViewingMemoDetail) {
       setIsLoggedIn(!isLoggedIn);
       return;
     }
 
     if (isLoggedIn) {
-      setIsEditable(false);
+      setIsViewingMemoDetail(false);
       setSelectedMemo(null);
       setInputContent("");
       setIsLoggedIn(!isLoggedIn);
@@ -128,7 +128,7 @@ export default function App() {
           onClickMemoTitle={handleClickMemoTitle}
           onClickAddButton={handleClickAddButton}
         />
-        {isEditable && (
+        {isViewingMemoDetail && (
           <MemoDetail
             key={selectedMemo.id}
             selectedMemo={selectedMemo}
