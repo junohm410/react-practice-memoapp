@@ -10,11 +10,12 @@ import {
 const blankCharRegExp = /^[\s\u3000]+$/;
 
 export default function App() {
-  const [memos, setMemos] = useState(
-    getAllMemosFromStorage() === null
-      ? []
-      : JSON.parse(getAllMemosFromStorage())
-  );
+  const [memos, setMemos] = useState(() => {
+    if (getAllMemosFromStorage() === null) {
+      saveMemosToStorage([]);
+    }
+    return JSON.parse(getAllMemosFromStorage());
+  });
   const [selectedMemo, setSelectedMemo] = useState(null);
   const [inputContent, setInputContent] = useState("");
   const [isViewingMemoDetail, setIsViewingMemoDetail] = useState(false);
