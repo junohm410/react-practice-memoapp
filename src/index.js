@@ -10,5 +10,5 @@ root.render(
     <LoginStatusProvider>
       <App />
     </LoginStatusProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
