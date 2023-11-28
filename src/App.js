@@ -83,27 +83,15 @@ export default function App() {
   };
 
   const handleClickLoginButton = () => {
-    if (isAddingNewMemo) {
-      setIsAddingNewMemo(false);
-      setIsViewingMemoDetail(false);
-      setMemos(JSON.parse(getAllMemosFromStorage()));
-      setSelectedMemo(null);
-      setIsLoggedIn(false);
-      return;
-    }
-
-    if (!isViewingMemoDetail) {
-      setIsLoggedIn(!isLoggedIn);
-      return;
-    }
-
     if (isLoggedIn) {
       setIsViewingMemoDetail(false);
       setSelectedMemo(null);
-      setIsLoggedIn(false);
-    } else {
-      setIsLoggedIn(true);
     }
+    if (isAddingNewMemo) {
+      setMemos(JSON.parse(getAllMemosFromStorage()));
+    }
+    setIsAddingNewMemo(false);
+    setIsLoggedIn(!isLoggedIn);
   };
 
   return (
