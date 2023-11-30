@@ -18,16 +18,27 @@ ul {
 }
 
 .memo-app-container {
+  width: fit-content;
+}
+
+.menu-container {
   display: flex;
+  justify-content: flex-end;
+  padding: 16px 24px 0px;
+}
+
+.memo-main-container {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .memo-list-container {
   min-width: 240px;
-  padding: 8px;
+  padding: 0px 24px;
 }
 
 .memo-detail-container {
-  padding: 8px;
+  padding: 0px 24px;
 }
 
 .memo-title {
@@ -41,7 +52,7 @@ ul {
 }
 
 .memo-textarea {
-  margin: 16px 16px 8px 16px;
+  margin: 16px 0px 8px;
   border-radius: 4px;
 }
 
@@ -51,11 +62,9 @@ ul {
 }
 
 .memo-edit-button {
-  margin: 0 16px;
   width: 192px;
 }
 
 .memo-delete-button {
-  margin: 0 16px;
   width: 80px;
 }

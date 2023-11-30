@@ -1,4 +1,5 @@
 import MemoTitle from "./MemoTitle";
+import { useLoginStatus } from "./LoginStatusContext";
 
 export default function MemoList({
   memos,
@@ -7,6 +8,8 @@ export default function MemoList({
   onClickMemoTitle,
   onClickAddButton,
 }) {
+  const { isLoggedIn } = useLoginStatus();
+
   return (
     <div className="memo-list-container">
       <div>
@@ -22,11 +25,13 @@ export default function MemoList({
             ))}
         </ul>
       </div>
-      <div>
-        <button onClick={onClickAddButton} disabled={isAddingNewMemo}>
-          +
-        </button>
-      </div>
+      {isLoggedIn && (
+        <div>
+          <button onClick={onClickAddButton} disabled={isAddingNewMemo}>
+            +
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLoginStatus } from "./LoginStatusContext";
 
 export default function MemoDetail({
   selectedMemo,
@@ -7,6 +8,7 @@ export default function MemoDetail({
   onDeleteMemo,
 }) {
   const [inputContent, setInputContent] = useState(selectedMemo.content);
+  const { isLoggedIn } = useLoginStatus();
 
   return (
     <div className="memo-detail-container">
@@ -16,22 +18,25 @@ export default function MemoDetail({
           cols="40"
           className="memo-textarea"
           value={inputContent}
+          readOnly={!isLoggedIn}
           onChange={(e) => {
             setInputContent(e.target.value);
           }}
         ></textarea>
       </div>
-      <div className="memo-detail-button-container">
-        <button
-          className="memo-edit-button"
-          onClick={() => onSubmitMemo(inputContent)}
-        >
-          {isAddingNewMemo ? "追加" : "編集"}
-        </button>
-        <button className="memo-delete-button" onClick={onDeleteMemo}>
-          削除
-        </button>
-      </div>
+      {isLoggedIn && (
+        <div className="memo-detail-button-container">
+          <button
+            className="memo-edit-button"
+            onClick={() => onSubmitMemo(inputContent)}
+          >
+            {isAddingNewMemo ? "追加" : "編集"}
+          </button>
+          <button className="memo-delete-button" onClick={onDeleteMemo}>
+            削除
+          </button>
+        </div>
+      )}
     </div>
   );
 }

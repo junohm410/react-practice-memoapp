@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MemoList from "./MemoList";
 import MemoDetail from "./MemoDetail";
+import { useLoginStatus } from "./LoginStatusContext";
 import {
   getAllMemosFromStorage,
   saveMemosToStorage,
@@ -9,14 +10,16 @@ import {
 const blankCharRegExp = /^[\s\u3000]+$/;
 
 export default function App() {
-  const [memos, setMemos] = useState(
-    getAllMemosFromStorage() === null
-      ? []
-      : JSON.parse(getAllMemosFromStorage()),
-  );
+  const [memos, setMemos] = useState(() => {
+    if (getAllMemosFromStorage() === null) {
+      saveMemosToStorage([]);
+    }
+    return JSON.parse(getAllMemosFromStorage());
+  });
   const [selectedMemo, setSelectedMemo] = useState(null);
-  const [isEditable, setIsEditable] = useState(false);
+  const [isViewingMemoDetail, setIsViewingMemoDetail] = useState(false);
   const [isAddingNewMemo, setIsAddingNewMemo] = useState(false);
+  const { isLoggedIn, setIsLoggedIn } = useLoginStatus();
 
   const handleClickMemoTitle = (memo) => {
     if (selectedMemo !== null && selectedMemo.id === memo.id) {
@@ -27,7 +30,7 @@ export default function App() {
       setMemos(JSON.parse(getAllMemosFromStorage()));
       setIsAddingNewMemo(false);
     }
-    setIsEditable(true);
+    setIsViewingMemoDetail(true);
     setSelectedMemo(memo);
   };
 
@@ -39,7 +42,7 @@ export default function App() {
     };
     const temporaryNewMemoList = [...memos, memoDraft];
     setIsAddingNewMemo(true);
-    setIsEditable(true);
+    setIsViewingMemoDetail(true);
     setMemos(temporaryNewMemoList);
     setSelectedMemo(memoDraft);
   };
@@ -74,29 +77,48 @@ export default function App() {
     isAddingNewMemo && setIsAddingNewMemo(false);
     const updatedMemos = memos.filter((memo) => memo.id !== selectedMemo.id);
     saveMemosToStorage(updatedMemos);
-    setIsEditable(false);
+    setIsViewingMemoDetail(false);
     setMemos(updatedMemos);
     setSelectedMemo(null);
   };
 
+  const handleClickLoginButton = () => {
+    if (isLoggedIn) {
+      setIsViewingMemoDetail(false);
+      setSelectedMemo(null);
+    }
+    if (isAddingNewMemo) {
+      setMemos(JSON.parse(getAllMemosFromStorage()));
+    }
+    setIsAddingNewMemo(false);
+    setIsLoggedIn(!isLoggedIn);
+  };
+
   return (
     <div className="memo-app-container">
-      <MemoList
-        memos={memos}
-        selectedMemo={selectedMemo}
-        isAddingNewMemo={isAddingNewMemo}
-        onClickMemoTitle={handleClickMemoTitle}
-        onClickAddButton={handleClickAddButton}
-      />
-      {isEditable && (
-        <MemoDetail
-          key={selectedMemo.id}
+      <div className="menu-container">
+        <button onClick={handleClickLoginButton}>
+          {isLoggedIn ? "ログアウト" : "ログイン"}
+        </button>
+      </div>
+      <div className="memo-main-container">
+        <MemoList
+          memos={memos}
           selectedMemo={selectedMemo}
           isAddingNewMemo={isAddingNewMemo}
-          onSubmitMemo={handleSubmitMemo}
-          onDeleteMemo={handleDeleteMemo}
+          onClickMemoTitle={handleClickMemoTitle}
+          onClickAddButton={handleClickAddButton}
         />
-      )}
+        {isViewingMemoDetail && (
+          <MemoDetail
+            key={selectedMemo.id}
+            selectedMemo={selectedMemo}
+            isAddingNewMemo={isAddingNewMemo}
+            onSubmitMemo={handleSubmitMemo}
+            onDeleteMemo={handleDeleteMemo}
+          />
+        )}
+      </div>
     </div>
   );
 }
